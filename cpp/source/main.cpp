@@ -9,8 +9,9 @@
 
 #include "shader.h"
 
+#include <omp.h>
 #include <Eigen/Dense>
-
+#include <pybind11/pybind11.h>
 
 // Define custom functions
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);

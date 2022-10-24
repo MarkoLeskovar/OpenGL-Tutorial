@@ -15,9 +15,6 @@ set(HEADER_FILES shader.h stb_image.h)
 find_package(OpenGL REQUIRED)
 find_package(OpenMP REQUIRED)
 
-# Variable for the Libs to add to the Linkers
-set(LIBS glfw glad OpenMP::OpenMP_CXX)
-
 # Variables for Paths of External Libraries
 # Add external modules
 set(GLFW_ROOT_DIR ${CMAKE_SOURCE_DIR}/external/glfw)
@@ -31,6 +28,9 @@ add_subdirectory(${GLAD_ROOT_DIR})
 add_subdirectory(${PYBIND_ROOT_DIR})
 include_directories(${EIGEN_ROOT_DIR})
 
+# Variable for the Libs to add to the Linkers
+set(LIBS glfw glad OpenMP::OpenMP_CXX)
+
 # Add main executable file
 add_executable(${PROJECT_NAME} main.cpp ${HEADER_FILES})
 
@@ -38,16 +38,18 @@ add_executable(${PROJECT_NAME} main.cpp ${HEADER_FILES})
 target_include_directories(${PROJECT_NAME} 
 	PUBLIC ${GLFW_ROOT_DIR}/include
 	PUBLIC ${GLAD_ROOT_DIR}/include/glad
+	PUBLIC ${PYBIND_ROOT_DIR}/include/pybind11
 )
 
 # Add the Link Directories for Libraries or Files. Used for creation of Static/Dynamic Libraries
 target_link_directories(${PROJECT_NAME} 
 	PRIVATE ${GLFW_ROOT_DIR}
 	PRIVATE ${GLAD_ROOT_DIR}/src
+	PRIVATE ${PYBIND_ROOT_DIR}
 )
 
 # Add the Libs to the Linker for the Project
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS} pybind11::module pybind11::lto pybind11::windows_extras)
 
 
 # EXPLANATION FOR SOME STUFF
