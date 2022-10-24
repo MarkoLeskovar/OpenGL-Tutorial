@@ -1,3 +1,4 @@
 [submodule "cpp/source/external/eigen"]
 	path = cpp/source/external/eigen
 	url = https://gitlab.com/libeigen/eigen.git
+    branch = 3.4
