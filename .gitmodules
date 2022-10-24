@@ -6,3 +6,8 @@
 	path = cpp/source/external/glfw
 	url = https://github.com/glfw/glfw.git
     branch = 3.3-stable
+[submodule "cpp/source/external/pybind11"]
+	path = cpp/source/external/pybind11
+	url = https://github.com/pybind/pybind11
+    branch = stable
+
