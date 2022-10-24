@@ -2,3 +2,7 @@
 	path = cpp/source/external/eigen
 	url = https://gitlab.com/libeigen/eigen.git
     branch = 3.4
+[submodule "cpp/source/external/glfw"]
+	path = cpp/source/external/glfw
+	url = https://github.com/glfw/glfw.git
+    branch = 3.3-stable
