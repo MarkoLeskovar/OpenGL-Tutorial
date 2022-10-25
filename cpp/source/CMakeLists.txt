@@ -22,14 +22,29 @@ set(GLAD_ROOT_DIR ${CMAKE_SOURCE_DIR}/external/glad)
 set(EIGEN_ROOT_DIR ${CMAKE_SOURCE_DIR}/external/eigen)
 set(PYBIND_ROOT_DIR ${CMAKE_SOURCE_DIR}/external/pybind11)
 
-# Add the External Libraries / Files Directory
+# Add the External Libraries with active CMake files
 add_subdirectory(${GLFW_ROOT_DIR})
 add_subdirectory(${GLAD_ROOT_DIR})
 add_subdirectory(${PYBIND_ROOT_DIR})
+
+# Include directories of that files
+include_directories(${GLFW_ROOT_DIR}/include)
 include_directories(${EIGEN_ROOT_DIR})
 
 # Variable for the Libs to add to the Linkers
-set(LIBS glfw glad OpenMP::OpenMP_CXX)
+set(LIBS glfw ${GLFW_LIBRARIES}
+		 glad 
+		 OpenMP::OpenMP_CXX
+		 OpenGL::GL)
+
+
+# Build flags for GLFW
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+
 
 # Add main executable file
 add_executable(${PROJECT_NAME} main.cpp ${HEADER_FILES})
@@ -49,7 +64,7 @@ target_link_directories(${PROJECT_NAME}
 )
 
 # Add the Libs to the Linker for the Project
-target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS} pybind11::module pybind11::lto pybind11::windows_extras)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS})
 
 
 # EXPLANATION FOR SOME STUFF
